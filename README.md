@@ -43,7 +43,7 @@ node -v
 **第 2 步：下载代码、安装依赖**
 
 ```bash
-cd ~ && git clone https://github.com/xdou98385-glitch/hachimi-restaurant.git && cd hachimi-restaurant && npm install
+cd ~ && git clone https://github.com/xdou98385-glitch/hachimi-restauraunt.git && cd hachimi-restauraunt && npm install
 ```
 
 成功：最后几行是 `added ... packages`，没有红色的 `ERR!`。
