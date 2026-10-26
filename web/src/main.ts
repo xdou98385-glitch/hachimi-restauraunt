@@ -5,6 +5,7 @@ import {
 } from "../../core/src/index.ts";
 import type { Action, GameState } from "../../core/src/index.ts";
 import { morph } from "./morph.ts";
+import { ask, confirmBox } from "./dialog.ts";
 
 const KEY = "hachimi-save";
 const $ = (sel: string) => document.querySelector(sel) as HTMLElement;
@@ -197,7 +198,7 @@ function render() {
 
 // ---------- 事件 ----------
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   const el = (e.target as HTMLElement).closest("button, [data-rename]") as HTMLElement | null;
   if (!el) return;
   const d = el.dataset;
@@ -205,7 +206,7 @@ document.addEventListener("click", (e) => {
   if (d.shop) { shopTab = d.shop; render(); return; }
   if (d.rename) {
     const cat = state.cats.find((x) => x.uid === Number(d.rename));
-    const name = cat && prompt("给它起个新名字", cat.name);
+    const name = cat && await ask("给它起个新名字", cat.name);
     if (cat && name) doAct({ type: "rename", cat: cat.uid, name });
     return;
   }
@@ -219,17 +220,17 @@ document.addEventListener("click", (e) => {
     return;
   }
   if (d.reset) {
-    if (!confirm("确定重新开店？现在的存档会被清掉（想留着先导出）")) return;
+    if (!(await confirmBox("确定重新开店？现在的存档会被清掉（想留着先导出）"))) return;
     state = createGame(c, Date.now(), (Math.random() * 2 ** 31) | 0);
     save(); render(); toast("新店开张！");
     return;
   }
   if (d.act) {
-    if (d.confirm && !confirm(d.confirm)) return;
+    if (d.confirm && !(await confirmBox(d.confirm))) return;
     const a = JSON.parse(d.act) as Action;
     if (a.type === "adopt") {
       const breed = state.stray ? find(c.cats, state.stray) : null;
-      const name = prompt("给它起个名字", breed?.name ?? "");
+      const name = await ask("给它起个名字", breed?.name ?? "");
       if (name === null) return;
       a.name = name;
     }
