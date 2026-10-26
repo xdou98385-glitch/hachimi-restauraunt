@@ -1,0 +1,10 @@
+[
+  { "id": "rice", "name": "大米", "emoji": "🍚", "price": 3 },
+  { "id": "egg", "name": "鸡蛋", "emoji": "🥚", "price": 2 },
+  { "id": "milk", "name": "牛奶", "emoji": "🥛", "price": 3 },
+  { "id": "flour", "name": "面粉", "emoji": "🌾", "price": 2 },
+  { "id": "veg", "name": "蔬菜", "emoji": "🥬", "price": 2 },
+  { "id": "fish", "name": "鱼", "emoji": "🐟", "price": 6 },
+  { "id": "chicken", "name": "鸡肉", "emoji": "🍗", "price": 6 },
+  { "id": "shrimp", "name": "虾", "emoji": "🦐", "price": 8 }
+]

@@ -1,0 +1,6 @@
+[
+  { "id": "catfood", "name": "猫粮", "emoji": "🥣", "price": 5, "target": "cat", "effect": { "fullness": 50 }, "verb": "喂了猫粮" },
+  { "id": "can", "name": "猫罐头", "emoji": "🥫", "price": 12, "target": "cat", "effect": { "fullness": 80, "mood": 15 }, "verb": "开了个罐头" },
+  { "id": "litter", "name": "猫砂", "emoji": "🪣", "price": 6, "target": "shop", "effect": { "hygiene": 40 }, "verb": "换了猫砂" },
+  { "id": "deodorant", "name": "除臭剂", "emoji": "🧴", "price": 8, "target": "shop", "effect": { "hygiene": 20 }, "verb": "喷了除臭剂" }
+]

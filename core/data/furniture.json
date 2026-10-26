@@ -1,0 +1,12 @@
+[
+  { "id": "table_small", "name": "小方桌", "emoji": "🪑", "price": 60, "seats": 2, "appeal": 1, "comfort": 0, "attracts": [] },
+  { "id": "table_round", "name": "圆桌", "emoji": "⭕", "price": 120, "seats": 3, "appeal": 2, "comfort": 0, "attracts": [] },
+  { "id": "sofa", "name": "沙发卡座", "emoji": "🛋️", "price": 260, "seats": 4, "appeal": 4, "comfort": 3, "attracts": [] },
+  { "id": "box", "name": "纸箱", "emoji": "📦", "price": 10, "seats": 0, "appeal": 0, "comfort": 3, "attracts": ["orange"] },
+  { "id": "cushion", "name": "猫垫子", "emoji": "🧶", "price": 40, "seats": 0, "appeal": 1, "comfort": 5, "attracts": ["calico"] },
+  { "id": "scratcher", "name": "猫抓板", "emoji": "🪵", "price": 60, "seats": 0, "appeal": 0, "comfort": 5, "attracts": ["tabby"] },
+  { "id": "plant", "name": "绿植", "emoji": "🪴", "price": 50, "seats": 0, "appeal": 2, "comfort": 0, "attracts": [] },
+  { "id": "lamp", "name": "暖光灯", "emoji": "💡", "price": 80, "seats": 0, "appeal": 3, "comfort": 3, "attracts": [] },
+  { "id": "cattower", "name": "猫爬架", "emoji": "🗼", "price": 220, "seats": 0, "appeal": 2, "comfort": 12, "attracts": ["black"] },
+  { "id": "fishtank", "name": "鱼缸", "emoji": "🐠", "price": 300, "seats": 0, "appeal": 5, "comfort": 4, "attracts": ["siamese"] }
+]

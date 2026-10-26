@@ -1,0 +1,10 @@
+[
+  { "id": "fountain", "name": "自动饮水机", "emoji": "💧", "price": 150, "desc": "猫心情掉得慢一些", "effect": { "moodDecayMul": 0.7 } },
+  { "id": "feeder", "name": "自动猫粮机", "emoji": "🍽️", "price": 300, "desc": "猫饿了自动从库存里拿猫粮喂，离线也管用", "effect": { "autoFeed": true } },
+  { "id": "litterbox", "name": "自动猫砂盆", "emoji": "🚽", "price": 400, "desc": "卫生掉得慢一半", "effect": { "hygieneDecayMul": 0.5 } },
+  { "id": "purifier", "name": "空气净化器", "emoji": "💨", "price": 350, "desc": "卫生再掉慢一些", "effect": { "hygieneDecayMul": 0.6 } },
+  { "id": "stove2", "name": "第二个灶台", "emoji": "🔥", "price": 250, "desc": "同时多做一道菜", "effect": { "stoves": 1 } },
+  { "id": "stove3", "name": "第三个灶台", "emoji": "🔥", "price": 600, "desc": "同时再多做一道菜", "requires": "stove2", "effect": { "stoves": 1 } },
+  { "id": "bigpiggy", "name": "大号招财罐", "emoji": "💰", "price": 500, "desc": "离线最多攒 24 小时（原来 12 小时）", "effect": { "offlineHoursAdd": 12 } },
+  { "id": "luckycat", "name": "招财猫摆件", "emoji": "🎏", "price": 450, "desc": "离线攒钱快一半", "effect": { "offlineRateMul": 1.5 } }
+]

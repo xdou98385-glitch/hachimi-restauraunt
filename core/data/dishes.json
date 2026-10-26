@@ -1,0 +1,8 @@
+[
+  { "id": "onigiri", "name": "饭团", "emoji": "🍙", "ingredients": { "rice": 1 }, "cookSec": 8, "price": 10, "learnPrice": 0 },
+  { "id": "tamago", "name": "玉子烧", "emoji": "🍳", "ingredients": { "egg": 2 }, "cookSec": 10, "price": 12, "learnPrice": 0 },
+  { "id": "pancake", "name": "松饼", "emoji": "🥞", "ingredients": { "flour": 1, "egg": 1, "milk": 1 }, "cookSec": 15, "price": 22, "learnPrice": 60 },
+  { "id": "fishsoup", "name": "鱼汤", "emoji": "🍲", "ingredients": { "fish": 1, "veg": 1 }, "cookSec": 20, "price": 25, "learnPrice": 80 },
+  { "id": "chickenrice", "name": "鸡肉饭", "emoji": "🍛", "ingredients": { "chicken": 1, "rice": 1, "veg": 1 }, "cookSec": 20, "price": 30, "learnPrice": 120 },
+  { "id": "tempura", "name": "天妇罗", "emoji": "🍤", "ingredients": { "shrimp": 2, "flour": 1 }, "cookSec": 25, "price": 40, "learnPrice": 150 }
+]

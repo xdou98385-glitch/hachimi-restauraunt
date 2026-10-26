@@ -1,0 +1,46 @@
+{
+  "startCoins": 200,
+  "startIngredients": { "rice": 6, "egg": 6 },
+  "startSupplies": { "catfood": 5, "litter": 2 },
+  "startFurniture": ["table_small"],
+  "starterCat": "orange",
+  "starterName": "哈基米",
+
+  "maxFurniture": 12,
+  "maxCats": 8,
+  "baseStoves": 1,
+
+  "offlineAfterSec": 120,
+  "offlineBaseHours": 12,
+  "maxSimulateHours": 48,
+  "offlineBase": 10,
+  "offlinePerCat": 6,
+  "offlinePerAppeal": 0.5,
+
+  "customerBaseSec": 40,
+  "customerMinSec": 6,
+  "charmFactor": 0.08,
+  "dirtyBelow": 30,
+  "dirtyCustomerMul": 1.6,
+  "tipFromHygiene": 0.1,
+  "tipPerAffection": 0.005,
+  "tipAffectionMax": 0.1,
+  "tipWaitSec": 90,
+
+  "hygieneDecayBase": 2,
+  "hygieneDecayPerCat": 1.5,
+  "hygienePerCustomer": 0.5,
+  "fullnessDecay": 8,
+  "moodDecay": 5,
+  "moodFloorMax": 60,
+  "workMin": 30,
+  "autoFeedBelow": 40,
+  "petMood": 15,
+  "petCooldownSec": 300,
+  "adoptFullness": 60,
+  "adoptMood": 60,
+
+  "strayCheckMin": 30,
+  "strayChance": 0.35,
+  "logMax": 40
+}
