@@ -46,7 +46,10 @@ export function act(prev: GameState, action: Action, now: number, c: Content): A
     case "buyFurniture": {
       const f = find(c.furniture, action.id);
       if (!f) return fail(`没有「${action.id}」这种家具`);
-      if (s.furniture.length >= c.balance.maxFurniture) return fail(`店里摆满了（最多 ${c.balance.maxFurniture} 件），先撤掉一件`);
+      const isTable = f.seats > 0;
+      const same = s.furniture.filter((id) => (find(c.furniture, id)?.seats ?? 0) > 0 === isTable).length;
+      const max = isTable ? c.balance.maxTables : c.balance.maxDecor;
+      if (same >= max) return fail(`${isTable ? "桌子" : "摆设"}最多 ${max} 件，先撤掉一件`);
       if (!pay(f.price)) return fail(`钱不够：${f.name}要 ${f.price}，现在只有 ${s.coins}`);
       s.furniture.push(f.id);
       return done(`摆上了${f.name}`);

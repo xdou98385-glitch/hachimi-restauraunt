@@ -1,7 +1,7 @@
 [
-  { "id": "orange", "name": "橘猫", "emoji": "🐈", "charm": 3, "tipBonus": 0, "desc": "能吃，见人就蹭，客人最喜欢摸它的肚子" },
-  { "id": "calico", "name": "三花", "emoji": "🐈", "charm": 2, "tipBonus": 0.1, "desc": "有点小脾气，但被它选中的客人会多给小费" },
-  { "id": "tabby", "name": "狸花", "emoji": "🐈", "charm": 2, "tipBonus": 0.05, "desc": "独立能干，自己巡店" },
-  { "id": "black", "name": "黑猫", "emoji": "🐈‍⬛", "charm": 4, "tipBonus": 0, "desc": "神出鬼没，据说会带来好运" },
-  { "id": "siamese", "name": "暹罗", "emoji": "🐈", "charm": 5, "tipBonus": 0.15, "desc": "话多，嗓门大，是店里的明星" }
+  {"id": "orange", "name": "橘猫", "emoji": "🐈", "charm": 3, "tipBonus": 0, "desc": "能吃，见人就蹭，客人最喜欢摸它的肚子", "color": "#f0a04b"},
+  {"id": "calico", "name": "三花", "emoji": "🐈", "charm": 2, "tipBonus": 0.1, "desc": "有点小脾气，但被它选中的客人会多给小费", "color": "#f4ead9"},
+  {"id": "tabby", "name": "狸花", "emoji": "🐈", "charm": 2, "tipBonus": 0.05, "desc": "独立能干，自己巡店", "color": "#9c7b5b"},
+  {"id": "black", "name": "黑猫", "emoji": "🐈‍⬛", "charm": 4, "tipBonus": 0, "desc": "神出鬼没，据说会带来好运", "color": "#2e2a28"},
+  {"id": "siamese", "name": "暹罗", "emoji": "🐈", "charm": 5, "tipBonus": 0.15, "desc": "话多，嗓门大，是店里的明星", "color": "#e8dcc6"}
 ]

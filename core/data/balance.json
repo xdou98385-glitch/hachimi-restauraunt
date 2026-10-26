@@ -2,11 +2,12 @@
   "startCoins": 200,
   "startIngredients": { "rice": 6, "egg": 6 },
   "startSupplies": { "catfood": 5, "litter": 2 },
-  "startFurniture": ["table_small"],
+  "startFurniture": ["table_small", "box"],
   "starterCat": "orange",
   "starterName": "哈基米",
 
-  "maxFurniture": 12,
+  "maxTables": 6,
+  "maxDecor": 8,
   "maxCats": 8,
   "baseStoves": 1,
 

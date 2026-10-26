@@ -6,6 +6,7 @@ import {
 import type { Action, GameState } from "../../core/src/index.ts";
 import { morph } from "./morph.ts";
 import { ask, confirmBox } from "./dialog.ts";
+import { Scene } from "./scene.ts";
 
 const KEY = "hachimi-save";
 const $ = (sel: string) => document.querySelector(sel) as HTMLElement;
@@ -14,6 +15,7 @@ const esc = (t: string) => t.replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&
 const r = Math.round;
 
 let state: GameState = load();
+const scene = new Scene($("#scene"), c);
 let tab = "shop";
 let shopTab = "ingredients";
 
@@ -39,9 +41,16 @@ function save() {
 }
 
 function doAct(a: Action) {
+  const before = state.coins;
   const res = act(state, a, Date.now(), c);
   state = res.state;
   toast(res.message, !res.ok);
+  if (res.ok) {
+    const gain = state.coins - before;
+    if (a.type === "serve") scene.fx(`+${gain}`, `cu${a.customer}`, "coin");
+    if (a.type === "collectPiggy" && gain > 0) scene.fx(`+${gain}`, "piggy", "coin");
+    if (a.type === "pet") scene.fx("♥", `cat${a.cat}`, "heart");
+  }
   save();
   render();
 }
@@ -71,43 +80,30 @@ function renderTop(now: number) {
   void now;
 }
 
-function renderHall(now: number) {
-  const st = shopStats(state, c);
-  const dish = (id: string) => find(c.dishes, id)!;
-  const customers = state.customers.map((cu) => {
-    const d = dish(cu.dish);
-    const ready = (state.counter[d.id] ?? 0) > 0;
-    const wait = r((now - cu.arrivedAt) / 1000);
-    return `<div class="card customer"><span class="big">🧑</span>
-      <span>想吃 ${d.emoji} ${d.name}<small>等了 ${wait} 秒</small></span>
-      ${btn("上菜", ready ? { type: "serve", customer: cu.uid } : null)}</div>`;
-  }).join("") || `<p class="empty">${state.menu.length ? (st.seats ? "暂时没有客人，摸摸猫等一会儿吧" : "没有座位，去商店买张桌子") : "菜单是空的，客人不会来"}</p>`;
-
-  const stoves = state.stoves.map((s, i) => {
-    if (!s.dish) return `<div class="stove">🔥${i + 1} <small>空着</small></div>`;
-    const d = dish(s.dish);
-    const left = Math.max(0, (s.readyAt - now) / 1000);
-    return `<div class="stove busy">${d.emoji} <small>${Math.ceil(left)} 秒</small>${bar(100 - (left / d.cookSec) * 100)}</div>`;
-  }).join("");
-
-  const counter = Object.entries(state.counter).map(([id, n]) => `${dish(id).emoji}×${n}`).join(" ") || "<small>空</small>";
-
-  const cookBtns = state.menu.map((id) => {
-    const d = dish(id);
+function cookButtons(): string {
+  return state.menu.map((id) => {
+    const d = find(c.dishes, id)!;
     const enough = Object.entries(d.ingredients).every(([k, n]) => (state.ingredients[k] ?? 0) >= n);
-    const need = Object.entries(d.ingredients).map(([k, n]) => `${find(c.ingredients, k)!.emoji}${n}`).join("");
-    return btn(`${d.emoji} ${d.name}<small>${need} · ${d.cookSec}秒</small>`, enough ? { type: "cook", dish: id } : null, `class="cook"`);
-  }).join("");
+    const need = Object.entries(d.ingredients).map(([k, n]) => `${find(c.ingredients, k)!.name}${n}`).join(" ");
+    return btn(`${d.name}<small>${need} · ${d.cookSec}秒</small>`, enough ? { type: "cook", dish: id } : null, `class="cook"`);
+  }).join("") || `<p class="empty">菜单是空的，去商店 → 菜谱上架几道菜</p>`;
+}
 
-  const stray = state.stray ? find(c.cats, state.stray)! : null;
-  put("#main", `
-    ${stray ? `<div class="card stray"><span class="big">${stray.emoji}</span><span>门口有一只${stray.name}<small>${esc(stray.desc)}</small></span>${btn("收养", { type: "adopt" }, `data-adopt="1"`)}</div>` : ""}
-    <h2>店堂 <small>座位 ${state.customers.length}/${st.seats} · 人气 ${st.charm}</small></h2>
-    ${customers}
-    <h2>厨房</h2>
-    <div class="stoves">${stoves}</div>
-    <p class="counter">出餐台：${counter}</p>
-    <div class="cooks">${cookBtns}</div>`);
+function renderHall(now: number) {
+  scene.update(state, now);
+  const st = shopStats(state, c);
+  const free = state.stoves.filter((x) => !x.dish).length;
+  const tip = !state.menu.length ? "菜单是空的，客人不会来"
+    : !st.seats ? "没有座位，去商店买张桌子"
+    : state.customers.length ? "点头上冒着菜名的客人就能上菜" : "客人在路上了，先做几道菜备着";
+  put("#hallBar", `
+    <p class="hint">座位 ${state.customers.length}/${st.seats} · 人气 ${st.charm} · 空灶台 ${free}/${state.stoves.length}<br><small>${tip}</small></p>
+    <div class="cooks">${cookButtons()}</div>`);
+}
+
+function openCook() {
+  put("#sheet", `<div class="panel"><h3>做什么菜？</h3><div class="cooks">${cookButtons()}</div><div class="row"><button data-close="1">先不做</button></div></div>`);
+  $("#sheet").hidden = false;
 }
 
 function renderCats(now: number) {
@@ -148,7 +144,7 @@ function renderShop() {
   } else if (shopTab === "furniture") {
     const placed = state.furniture.map((id) => find(c.furniture, id)!).map((f) =>
       `<button data-act='${esc(JSON.stringify({ type: "removeFurniture", id: f.id }))}' data-confirm="撤掉${f.name}？只退一半钱" class="chip">${f.emoji} ${f.name} ✕</button>`).join("");
-    body = `<p class="hint">店里（${state.furniture.length}/${c.balance.maxFurniture}）：${placed || "空"}</p>` +
+    body = `<p class="hint">店里摆着：${placed || "空"}<br><small>桌子最多 ${c.balance.maxTables} 张，摆设最多 ${c.balance.maxDecor} 件</small></p>` +
       c.furniture.map((f) => {
         const tags = [f.seats && `座位+${f.seats}`, f.appeal && `人气+${f.appeal}`, f.comfort && `舒适+${f.comfort}`,
           f.attracts.length && `会吸引${f.attracts.map((a) => find(c.cats, a)!.name).join("、")}`].filter(Boolean).join(" · ");
@@ -189,6 +185,8 @@ function renderMore() {
 function render() {
   const now = Date.now();
   renderTop(now);
+  $("#hall").hidden = tab !== "hall";
+  $("#main").hidden = tab === "hall";
   if (tab === "hall") renderHall(now);
   else if (tab === "cats") renderCats(now);
   else if (tab === "shop") renderShop();
@@ -199,9 +197,21 @@ function render() {
 // ---------- 事件 ----------
 
 document.addEventListener("click", async (e) => {
-  const el = (e.target as HTMLElement).closest("button, [data-rename]") as HTMLElement | null;
+  const sheet = $("#sheet");
+  if (e.target === sheet) { sheet.hidden = true; return; }
+  const el = (e.target as HTMLElement).closest("button, [data-rename], [data-act], [data-hint], [data-stove], [data-adopt]") as HTMLElement | null;
   if (!el) return;
   const d = el.dataset;
+  if (sheet.contains(el)) sheet.hidden = true;
+  if (d.close) return;
+  if (d.hint) { toast(d.hint, true); return; }
+  if (d.stove) { openCook(); return; }
+  if (d.adopt) {
+    const breed = state.stray ? find(c.cats, state.stray) : null;
+    const name = await ask(`门口这只${breed?.name ?? "猫"}想留下来，给它起个名字`, breed?.name ?? "");
+    if (name !== null) doAct({ type: "adopt", name });
+    return;
+  }
   if (d.tab) { tab = d.tab; render(); return; }
   if (d.shop) { shopTab = d.shop; render(); return; }
   if (d.rename) {
@@ -227,14 +237,7 @@ document.addEventListener("click", async (e) => {
   }
   if (d.act) {
     if (d.confirm && !(await confirmBox(d.confirm))) return;
-    const a = JSON.parse(d.act) as Action;
-    if (a.type === "adopt") {
-      const breed = state.stray ? find(c.cats, state.stray) : null;
-      const name = await ask("给它起个名字", breed?.name ?? "");
-      if (name === null) return;
-      a.name = name;
-    }
-    doAct(a);
+    doAct(JSON.parse(d.act) as Action);
   }
 });
 

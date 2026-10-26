@@ -27,7 +27,7 @@ export interface Furniture {
   seats: number; appeal: number; comfort: number; attracts: string[];
 }
 
-export interface CatBreed { id: string; name: string; emoji: string; charm: number; tipBonus: number; desc: string }
+export interface CatBreed { id: string; name: string; emoji: string; color: string; charm: number; tipBonus: number; desc: string }
 
 export interface Content {
   ingredients: Ingredient[]; dishes: Dish[]; supplies: Supply[];
@@ -39,7 +39,7 @@ export interface Content {
 export interface Balance {
   startCoins: number; startIngredients: Record<string, number>; startSupplies: Record<string, number>;
   startFurniture: string[]; starterCat: string; starterName: string;
-  maxFurniture: number; maxCats: number; baseStoves: number;
+  maxTables: number; maxDecor: number; maxCats: number; baseStoves: number;
   offlineAfterSec: number; offlineBaseHours: number; maxSimulateHours: number;
   offlineBase: number; offlinePerCat: number; offlinePerAppeal: number;
   customerBaseSec: number; customerMinSec: number; charmFactor: number;
